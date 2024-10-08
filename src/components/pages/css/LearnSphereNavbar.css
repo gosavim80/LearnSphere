@@ -1,0 +1,25 @@
+.navbar {
+    background-color: #24292e; /* Dark background */
+    padding: 15px 30px; /* Spacing */
+}
+
+.brand {
+    color: #f4f4f4; /* Brand text color */
+    font-size: 1.5rem; /* Brand size */
+    margin-right: 40px; /* Space after brand */
+}
+
+.nav-link {
+    color: #f4f4f4; /* Default link color */
+    margin-right: 20px; /* Space between links */
+    padding: 10px 15px; /* Padding around links */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    border-radius: 5px; /* Rounded corners for links */
+}
+
+/* Active link styles */
+.nav-link.active {
+    background-color: #61dafb; /* Active link background color */
+    color: #24292e; /* Active link text color */
+}
+
