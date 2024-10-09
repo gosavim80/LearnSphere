@@ -97,9 +97,10 @@ const FlashcardApp = () => {
             />
           ) : isReviewComplete && !recheckMode ? (
             <>
-              <h5>You've completed the review!</h5>
+              {/* <h5>You've completed the review!</h5> */}
               <p>Total correct: {correctCount}</p>
-              <p>Total incorrect: {incorrectCount}</p>
+              <p className='mb-5'>Total incorrect: {incorrectCount}</p>
+
               {incorrectCount > 0 && (
                 <Button onClick={handleRecheck} variant="warning">
                   Recheck Incorrect Words

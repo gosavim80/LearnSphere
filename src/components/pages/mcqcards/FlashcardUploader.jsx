@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Alert } from "react-bootstrap";
+import { Button, Form, Alert, Container } from "react-bootstrap";
 
 const FlashcardUploader = ({ onDataLoaded }) => {
   const [file, setFile] = useState(null);
@@ -8,14 +8,6 @@ const FlashcardUploader = ({ onDataLoaded }) => {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
     setError(null); // Clear any previous errors
-  };
-
-  // Function to shuffle an array (Fisher-Yates algorithm)
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
   };
 
   const handleUpload = () => {
@@ -38,11 +30,14 @@ const FlashcardUploader = ({ onDataLoaded }) => {
 
         // Skip blank lines
         if (trimmedLine === "") {
+          // If we have a current word and meaning, save it as a flashcard
           if (currentWord && currentMeaning) {
+//console.log("current word--->"+currentWord+"----->current menaing"+currentMeaning);
+
+
             flashcards.push({
-              word: currentWord.match(/(.+?)（(.+?)）/) 
-                ? currentWord.match(/(.+?)（(.+?)）/)[1] 
-                : currentWord,
+              word: currentWord.match(/(.+?)（(.+?)）/)
+              ? currentWord.match(/(.+?)（(.+?)）/)[1] :currentWord,
               meaning: currentMeaning,
               reading: currentWord.match(/(.+?)（(.+?)）/)
                 ? currentWord.match(/(.+?)（(.+?)）/)[2]
@@ -65,9 +60,8 @@ const FlashcardUploader = ({ onDataLoaded }) => {
       // Check if there's an unprocessed card at the end
       if (currentWord && currentMeaning) {
         flashcards.push({
-          word: currentWord.match(/(.+?)（(.+?)）/) 
-            ? currentWord.match(/(.+?)（(.+?)）/)[1] 
-            : currentWord,
+          word: currentWord.match(/(.+?)（(.+?)）/)
+          ? currentWord.match(/(.+?)（(.+?)）/)[1] :currentWord,
           meaning: currentMeaning,
           reading: currentWord.match(/(.+?)（(.+?)）/)
             ? currentWord.match(/(.+?)（(.+?)）/)[2]
@@ -75,14 +69,11 @@ const FlashcardUploader = ({ onDataLoaded }) => {
         });
       }
 
-      // Shuffle the flashcards array before sending it to onDataLoaded
-      shuffleArray(flashcards);
-
       if (flashcards.length === 0) {
         setError("No valid flashcards found in the file.");
       } else {
         setError(null); // Clear any errors if parsing was successful
-        onDataLoaded(flashcards); // Send shuffled flashcards
+        onDataLoaded(flashcards);
       }
     };
 
@@ -94,16 +85,18 @@ const FlashcardUploader = ({ onDataLoaded }) => {
   };
 
   return (
-    <div className="flashcard-uploader">
+  <Container>
+      <div className="flashcard-uploader mt-5">
       {error && <Alert variant="danger">{error}</Alert>}
       <Form.Group controlId="formFile">
-        <Form.Label>Upload Flashcard File</Form.Label>
+        <Form.Label className="mb-4">Upload Flashcard File</Form.Label>
         <Form.Control type="file" accept=".txt" onChange={handleFileChange} />
       </Form.Group>
-      <Button variant="primary" className="mt-3" onClick={handleUpload}>
+      <Button variant="primary" className="mt-5" onClick={handleUpload}>
         Upload
       </Button>
     </div>
+  </Container>
   );
 };
 
